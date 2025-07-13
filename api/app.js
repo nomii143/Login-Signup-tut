@@ -5,10 +5,9 @@ const { connectDB } = require('../config/db');
 const authRoutes = require('../routes/authRoutes');
 require('dotenv').config();
 
-
 const app = express();
 
-// Connect to DB
+// Connect DB
 connectDB();
 
 // Middleware
@@ -22,12 +21,11 @@ app.use(session({
   cookie: { secure: false, maxAge: 24 * 60 * 60 * 1000 }
 }));
 
-// Set views
+// Views
 app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, '..', 'views')); // Important fix
+app.set('views', path.join(__dirname, '..', 'views'));
 
 // Routes
 app.use('/', authRoutes);
 
-// Export app for Vercel
-module.exports = app;
+module.exports = app; // ✅ Required by Vercel
