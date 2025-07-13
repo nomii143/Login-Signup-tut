@@ -3,6 +3,8 @@ const path = require('path');
 const session = require('express-session');
 const { connectDB } = require('../config/db');
 const authRoutes = require('../routes/authRoutes');
+require('dotenv').config();
+
 
 const app = express();
 
