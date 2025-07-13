@@ -1,8 +1,8 @@
 const express = require('express');
 const path = require('path');
 const session = require('express-session');
-const { connectDB } = require('./config/db');
-const authRoutes = require('./routes/authRoutes');
+const { connectDB } = require('../config/db');
+const authRoutes = require('../routes/authRoutes');
 
 const app = express();
 
@@ -12,7 +12,7 @@ connectDB();
 // Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, '..', 'public')));
 app.use(session({
   secret: 'yourSecretKey',
   resave: false,
@@ -22,11 +22,10 @@ app.use(session({
 
 // Set views
 app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(__dirname, '..', 'views')); // Important fix
 
 // Routes
 app.use('/', authRoutes);
 
-// Start server
-const PORT = 3000;
-app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
+// Export app for Vercel
+module.exports = app;
